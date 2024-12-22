@@ -4,6 +4,7 @@ import blink from '../css/blink.module.css';
 import fadein from '../css/fadein.module.css';
 import { IFormData } from '../global/types.ts';
 import useResults from '../hooks/useResults.ts';
+import classNames from 'classnames';
 
 type Props = {
   results: string[];
@@ -87,7 +88,12 @@ function Results(props: Props) {
               </li>
             ))}
           </ol>
-          <button onClick={() => copyAll()} className="w-full h-10 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Copy All</button>
+          <button 
+            onClick={() => copyAll()} 
+            className={classNames('"w-full h-10 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"', { hidden: truncatedResults.length <= 0 })}
+            >
+              Copy All
+          </button>
           {props.results.length / 10 > 1 && (
             <Pagination
               previousDisabled={page === 1}
