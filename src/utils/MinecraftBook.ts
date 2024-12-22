@@ -225,6 +225,7 @@ class BookGenerator {
       return text
         .replace(/"/g, '<&dq>')
         .replace(/'/g, '<&sq>')
+        .replace(/:/g, '<&co>')
         .replace(/<newpage>/g, '')
         .trim()
         .replace(/\n/g, '<n>');
