@@ -1,6 +1,6 @@
 function MultiChoice(props: {
   name: string;
-  items: { id: string; label: string; checked: boolean; callback: () => void }[];
+  items: { id: string; label: string; checked: boolean; span?: number; callback: () => void }[];
 }) {
   return (
     <div
@@ -9,7 +9,7 @@ function MultiChoice(props: {
       }
     >
       {props.items.map((item) => (
-        <div key={item.id}>
+        <div key={item.id} style={{ gridColumn: "span " + item.span ?? 1}}>
           <input
             type='radio'
             name={props.name}

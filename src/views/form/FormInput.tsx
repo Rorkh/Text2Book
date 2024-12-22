@@ -23,7 +23,7 @@ function FormInput(props: IFormInput) {
     <form onSubmit={props.handleSubmit}>
       <div
         className={classNames('flex flex-wrap mb-4', {
-          hidden: props.generationFormat === 'text',
+          hidden: props.generationFormat === 'text' || props.generationFormat === 'denizen',
         })}
       >
         <div className='w-full sm:w-1/2 px-2'>

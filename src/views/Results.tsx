@@ -20,6 +20,7 @@ function Results(props: Props) {
     download,
     onAnimationEnd,
     copyAndNotify,
+    copyAll,
     removeCopiedRow,
     checkRowIsCopied,
     prevPage,
@@ -86,6 +87,7 @@ function Results(props: Props) {
               </li>
             ))}
           </ol>
+          <button onClick={() => copyAll()} className="w-full h-10 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Copy All</button>
           {props.results.length / 10 > 1 && (
             <Pagination
               previousDisabled={page === 1}

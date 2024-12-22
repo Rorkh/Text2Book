@@ -8,8 +8,8 @@ export type IFormData = {
   setInputFormat: LocalStorageSetter<'text' | 'file'>;
   outputFormat: 'text' | 'file';
   setOutputFormat: LocalStorageSetter<'text' | 'file'>;
-  generationFormat: 'text' | 'commands';
-  setGenerationFormat: LocalStorageSetter<'text' | 'commands'>;
+  generationFormat: 'text' | 'commands' | 'denizen';
+  setGenerationFormat: LocalStorageSetter<'text' | 'commands' | 'denizen'>;
   minecraftVersion: 'bedrock' | 'java';
   setMinecraftVersion: LocalStorageSetter<'bedrock' | 'java'>;
   text: string;

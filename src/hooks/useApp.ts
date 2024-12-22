@@ -26,7 +26,7 @@ export default function useApp(): IApp {
       title: string,
       author: string,
       minecraftVersion: 'bedrock' | 'java',
-      generationFormat: 'commands' | 'text',
+      generationFormat: 'commands' | 'text' | 'denizen',
       javaVersion: '1.20.4' | '1.20.5',
       linesPerPage: number,
       nameSuffix: string

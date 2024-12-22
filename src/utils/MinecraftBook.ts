@@ -5,7 +5,7 @@ export type BookParameters = {
   title: string;
   author: string;
   minecraftVersion: 'java' | 'bedrock';
-  generationFormat: 'commands' | 'text';
+  generationFormat: 'commands' | 'text' | 'denizen';
   javaVersion: '1.20.4' | '1.20.5';
   linesPerPage?: number;
   nameSuffix?: string;
@@ -127,8 +127,10 @@ class Calculator {
 
     // Removes all trailing spaces of new lines
     // Splits the text into words to calculate their lengths separately
-    const splicedWords = this._text.replace(/ +\n/g, '\n').split(/(\s)/g);
-
+    const splicedWords = this._text
+      .replace(/ +\n/g, '\n')
+      .split(/(\s)/g);
+    
     // Go through each word
     for (let i = 0; i < splicedWords.length; i++) {
       // Get the sum of the words letters
@@ -173,7 +175,7 @@ class BookGenerator {
   private _title: string;
   private _author: string;
   private _minecraftVersion: 'java' | 'bedrock';
-  private _generationFormat: 'commands' | 'text';
+  private _generationFormat: 'commands' | 'text' | 'denizen';
   private _javaVersion: '1.20.4' | '1.20.5';
   private _lines: string[];
   private _pages: string[] = [];
@@ -219,6 +221,12 @@ class BookGenerator {
         .replace(/'/g, '\\' + "'") // Escape single quotes (')
         .trim() // Remove whitespace from both ends of the string ( )
         .replace(/\n/g, '\\\\n'); // Escape new lines (\n)
+    } else if (this._generationFormat == 'denizen') {
+      return text
+        .replace(/"/g, '<&dq>')
+        .replace(/'/g, '<&sq>')
+        .trim()
+        .replace(/\n/g, '<n>');
     } else if (this._generationFormat === 'text') {
       return text.trim();
     } else {
@@ -233,7 +241,7 @@ class BookGenerator {
   private encapsuleText(text: string) {
     if (this._generationFormat === 'commands') {
       return `'{"text":"${text}"}'`;
-    } else if (this._generationFormat === 'text') {
+    } else if (this._generationFormat === 'text' || this._generationFormat == 'denizen') {
       return text;
     } else {
       return '';
@@ -260,6 +268,12 @@ class BookGenerator {
       }
     } else if (this._generationFormat === 'text') {
       return this._pages.toString();
+    } else if (this._generationFormat === 'denizen') {
+      let output = '';
+      this._pages.forEach(function(page) {
+        output += page;
+      });
+      return output;
     } else {
       return '';
     }
@@ -322,7 +336,7 @@ class BookGenerator {
         this._minecraftVersion === 'bedrock'
           ? this._linesPerPage * 50
           : this._linesPerPage * 100;
-    } else if (this._generationFormat === 'text') {
+    } else if (this._generationFormat === 'text' || this._generationFormat === 'denizen') {
       // 14 lines for each page
       lineLimit = this._linesPerPage || 14;
     }
@@ -330,6 +344,11 @@ class BookGenerator {
     // Go through each line
     for (let i = 0; i <= this._lines.length; i++) {
       numberOfLines++;
+
+      if (this._generationFormat == 'denizen' && typeof this._lines[i] !== 'undefined') {
+        var paragraphs = (this._lines[i].match(/<p>/g) || []).length;
+        numberOfLines += paragraphs;
+      }
 
       if (numberOfLines == lineLimit || i == this._lines.length) {
         const splicedLines = copyOfLines.splice(0, numberOfLines);

@@ -56,6 +56,13 @@ function FormSettings(props: IFormSettings) {
             checked: props.generationFormat === 'commands',
             callback: () => props.setGenerationFormat('commands'),
           },
+          {
+            id: 'use-denizen-generation',
+            label: '📟 Generate Denizen Lines',
+            checked: props.generationFormat === 'denizen',
+            span: 2,
+            callback: () => props.setGenerationFormat('denizen'),
+          },
         ]}
       />
       {props.generationFormat === 'commands' && (

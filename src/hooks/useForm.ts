@@ -15,7 +15,7 @@ export default function useForm(showResults: IResults): IFormData {
     'outputFormat',
     'text'
   );
-  const [generationFormat, setGenerationFormat] = useLocalStorage<'commands' | 'text'>(
+  const [generationFormat, setGenerationFormat] = useLocalStorage<'commands' | 'text' | 'denizen'>(
     'generationFormat',
     'commands'
   );

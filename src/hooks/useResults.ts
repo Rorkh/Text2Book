@@ -62,6 +62,18 @@ export default function useResults(results: string[]) {
   };
 
   /**
+   * Copy the text.
+   * @param text The text to copy.
+   */
+  const copyAll = () => {
+    let result  = "";
+    truncatedResults.forEach((line) => {
+      result += "- " + line.value + "\n";
+    });
+    void navigator.clipboard.writeText(result);
+  }
+
+  /**
    * Handle the end of the animation.
    * @param event The event object.
    */
@@ -116,6 +128,7 @@ export default function useResults(results: string[]) {
     download,
     onAnimationEnd,
     copyAndNotify,
+    copyAll,
     addCopiedRow,
     removeCopiedRow,
     checkRowIsCopied,
