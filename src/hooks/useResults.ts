@@ -67,8 +67,8 @@ export default function useResults(results: string[]) {
    */
   const copyAll = () => {
     let result  = "";
-    truncatedResults.forEach((line) => {
-      result += "- " + line.value + "\n";
+    results.forEach((line) => {
+      result += "- " + line + "\n";
     });
     void navigator.clipboard.writeText(result);
   }
