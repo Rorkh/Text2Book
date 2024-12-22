@@ -225,6 +225,7 @@ class BookGenerator {
       return text
         .replace(/"/g, '<&dq>')
         .replace(/'/g, '<&sq>')
+        .replace(/<newpage>/g, '')
         .trim()
         .replace(/\n/g, '<n>');
     } else if (this._generationFormat === 'text') {
@@ -345,12 +346,16 @@ class BookGenerator {
     for (let i = 0; i <= this._lines.length; i++) {
       numberOfLines++;
 
+      var createNewPage = false;
       if (this._generationFormat == 'denizen' && typeof this._lines[i] !== 'undefined') {
-        var paragraphs = (this._lines[i].match(/<p>/g) || []).length;
-        numberOfLines += paragraphs;
+        var createNewPage = (this._lines[i].match(/<newpage>/g) || []).length > 0;
+
+        if (createNewPage) {
+          this._lines[i] = this._lines[i].replace(/<newpage>/g, '');
+        }
       }
 
-      if (numberOfLines == lineLimit || i == this._lines.length) {
+      if (numberOfLines == lineLimit || i == this._lines.length || createNewPage) {
         const splicedLines = copyOfLines.splice(0, numberOfLines);
         const book = this.createBook(splicedLines);
         numberOfLines = 0;

@@ -4,6 +4,7 @@ import loader from '../../assets/loader.svg';
 import { IFormInput } from '../../global/types.ts';
 import TextInput from '../../components/TextInput.tsx';
 import TextArea from '../../components/TextArea.tsx';
+import Hint from '../../components/Hint.tsx';
 
 function FormInput(props: IFormInput) {
   // Decides if load icon should be shown
@@ -50,23 +51,29 @@ function FormInput(props: IFormInput) {
         </div>
       </div>
       <div className='mb-4'>
-        <div className={classNames({ hidden: props.inputFormat === 'text' })}>
-          <FileUpload
-            label='Text'
-            callback={(text) => props.setText(text)}
-            useFileUpload={props.inputFormat === 'file'}
-          />
-        </div>
-        <div className={classNames({ hidden: props.inputFormat === 'file' })}>
-          <TextArea
-            label='Text'
-            id='text'
-            placeholder='Once upon a time, there was a girl...'
-            value={props.text}
-            setter={props.setText}
-            required={props.inputFormat === 'text'}
-          />
-        </div>
+        <Hint
+          text='You can use <newpage> tag to indicate page break'
+          padding={-7}
+          hidden={props.generationFormat !== "denizen"}
+        >
+          <div className={classNames({ hidden: props.inputFormat === 'text' })}>
+            <FileUpload
+              label='Text'
+              callback={(text) => props.setText(text)}
+              useFileUpload={props.inputFormat === 'file'}
+            />
+          </div>
+          <div className={classNames({ hidden: props.inputFormat === 'file' })}>
+            <TextArea
+              label='Text'
+              id='text'
+              placeholder='Once upon a time, there was a girl...'
+              value={props.text}
+              setter={props.setText}
+              required={props.inputFormat === 'text'}
+            />
+          </div>
+        </Hint>
       </div>
       <button
         type='submit'

@@ -1,10 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 
 type Props = {
   text: string;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   padding?: number;
   children?: React.ReactNode;
+  hidden?: boolean
 };
 
 function Hint(props: Props) {
@@ -24,7 +26,7 @@ function Hint(props: Props) {
   return (
     <div style={{ position: 'relative' }} className='hint'>
       {props.children}
-      <div style={hintStyle}>
+      <div style={hintStyle} className={classNames({ hidden: props.hidden === true })}>
         <div className='relative group'>
           <div className='w-5 h-5 rounded-full bg-gray-800 text-white flex justify-center items-center cursor-help opacity-40 hover:opacity-100 transition-opacity'>
             {' '}
